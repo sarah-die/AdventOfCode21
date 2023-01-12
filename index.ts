@@ -1,4 +1,4 @@
-import { day1 } from "./day1/day1";
 import * as path from "path";
+import {day2} from "./day2/day2";
 
-console.log(day1(2)(path.join("day1", "inputData")));
+console.log(day2(2)(path.join("day2", "inputData")));
