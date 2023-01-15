@@ -17,8 +17,38 @@ const star1: StarFunction<number> = (file: string) => {
   );
 };
 
-const star2: StarFunction<number> = (file: string) => {
-  prepareInput(file);
+// commonIndex = 1 (mostCommon), = 0 (leastCommon)
+const determineCommon = (
+  input: string[],
+  index: number,
+  commonIndex: number
+): string[] => {
+  const eachPart = (i: number) => (acc: number, cur: string) =>
+    acc + Number(cur[i]);
+  const sum: number = input.reduce(eachPart(index), 0);
+  if (commonIndex === 1) {
+    const common = sum < input.length / 2 ? 0 : 1;
+    return input.filter((el) => Number(el[index]) === common);
+  } else {
+    const uncommon = sum < input.length / 2 ? 1 : 0;
+    return input.filter((el) => Number(el[index]) === uncommon);
+  }
+};
 
-  return 0;
+const star2: StarFunction<number> = (file: string) => {
+  let inputOxygen = prepareInput(file);
+  let inputo2 = [...inputOxygen];
+  let index: number = 0;
+
+  while (inputOxygen.length > 1) {
+    inputOxygen = determineCommon(inputOxygen, index, 1);
+    index++;
+  }
+  index = 0;
+  while (inputo2.length > 1) {
+    inputo2 = determineCommon(inputo2, index, 0);
+    index++;
+  }
+
+  return parseInt(inputOxygen[0], 2) * parseInt(inputo2[0], 2);
 };
